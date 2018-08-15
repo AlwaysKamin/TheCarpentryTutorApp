@@ -43,10 +43,13 @@ public class Information extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Grabs the name of the block within the list view that is selected
                 itemValue = (String) listView.getItemAtPosition(position);
 
                 Intent intent = new Intent();
                 System.out.println(position);
+
+                // Used for sending values back to the previous activity
                 intent.putExtra("blockID", String.valueOf(position + 1));
                 intent.putExtra("blockName", itemValue);
 
@@ -72,6 +75,7 @@ public class Information extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                //pd is used to show a simple show a wait dialog while the server returns the information
                 pd = new ProgressDialog(Information.this);
                 pd.setMessage("Please Wait");
                 pd.show();
@@ -81,10 +85,11 @@ public class Information extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s) {
                 if(pd.isShowing()){
+                    //Dismisses the dialog when the app is done calling execute on asyncTask
                     pd.dismiss();
                 }
                 try {
-                    System.out.println(s);
+                    //Sends the string to loadIntoListView
                     loadIntoListView(s);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -139,6 +144,7 @@ public class Information extends AppCompatActivity {
         // It wil then take that json object and get each individual piece and seperate it via get String
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
+            //Just grabs the block name from the json setup based off the variable blockName
             blockInfo[i] = obj.getString("blockName");
         }
 

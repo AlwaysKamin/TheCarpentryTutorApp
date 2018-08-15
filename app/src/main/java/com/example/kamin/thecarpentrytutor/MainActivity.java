@@ -36,14 +36,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Sets the current activity
         setContentView(R.layout.activity_main);
+        //Used for the top toolbar that gives the application a name
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        // Setup for all of the buttons and text boxes on the screen
         final Button getBlocks = findViewById(R.id.getBlockButton);
         final Button getBlockData = findViewById(R.id.getBlockDataButton);
-
         final TextView blockResults = findViewById(R.id.blockName);
-
         final TextView blockNameText = findViewById(R.id.blockName);
         final TextView blockIDText = findViewById(R.id.blockID);
         final TextView blockLengthText = findViewById(R.id.blockLength);
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Code layout for button click is from android documentation
+        // The button grabs the block info and then displays it to the screen
         getBlockData.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
@@ -66,9 +68,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        // Button will grab the blocks from the server and show them on a secondary activity
         getBlocks.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
+                // Creats a new intent that changes from this activity to the information activity
                 Intent i = new Intent(MainActivity.this, Information.class);
+                // Starts the new activity and uses nameRequest for passing back information
                 startActivityForResult(i, nameRequest);
             }
         });
@@ -109,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     return sb.toString().trim();
                 } catch (Exception e) {
+                    // Straight up error
                     Log.e("Error", "Something went really really wrong");
                     return null;
                 }
